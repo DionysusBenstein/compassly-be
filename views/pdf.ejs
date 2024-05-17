@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%=pdf_name %></title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+
+    <script type="text/javascript">
+      // window.jsPDF = window.jspdf.jsPDF;
+      function makePDF() {
+        domtoimage
+          .toPng(document.getElementById("content"))
+          .then(function (dataUrl) {
+            var img = new Image();
+            var doc = new window.jsPDF();
+            img.src = dataUrl;
+            doc.addImage(dataUrl, "JPEG", 0, 0);
+            // window.open(doc.output("bloburl"));
+            window.location.href = doc.output("bloburl");
+          })
+          .catch(function (error) {
+            console.error("oops, something went wrong!", error);
+          });
+      }
+    </script>
+
+    <link rel="stylesheet" href="/styles/pdf.css" />
+  </head>
+  <body onload="makePDF()">
+    <main>
+      <page id="content">
+        <div class="pageContent">
+          <header>
+            <div class="date">
+              <h3>Date</h3>
+              <div class="dateContent"><%= year %>.<%= month %>.<%= day %></div>
+            </div>
+            <div class="title">Daily planner</div>
+            <div class="logo">
+              <div class="logoContent"></div>
+            </div>
+          </header>
+          <section>
+            <div class="box w25">
+              <div class="box-header" style="background-color: #ffd600">
+                Today’s point of focus
+              </div>
+              <div class="textLine">
+                <p><%= focus %></p>
+              </div>
+              <div class="textLine">
+                <p></p>
+              </div>
+              <div class="textLine">
+                <p></p>
+              </div>
+            </div>
+            <div class="box w50">
+              <div class="box-header" style="background-color: #ffe766">
+                Today’s goals / objectives
+              </div>
+              <div class="textLine">
+                <p><%= goals %></p>
+              </div>
+              <div class="textLine">
+                <p></p>
+              </div>
+              <div class="textLine">
+                <p></p>
+              </div>
+            </div>
+            <div class="box w25">
+              <div class="box-header" style="background-color: #aaf09e">
+                Experiental activity
+              </div>
+              <div class="textLine">
+                <p><%= experiental %></p>
+                <% if(experiental_behavior === "experientalPositive"){ %>
+                <div class="icon" style="background-color: #56e13f">
+                  <svg
+                    width="32"
+                    height="34"
+                    viewBox="0 0 32 34"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g filter="url(#filter0_d)">
+                      <path
+                        d="M26.7654 15.129C26.7654 13.7183 25.6223 12.5753 24.2121 12.5753H20.5928C21.6382 9.95951 21.7145 7.8149 21.7078 7.12796C21.707 7.05247 21.724 6.78489 21.724 6.7256V6.60663C21.6481 4.1225 20.8877 3.36205 19.911 3C18.9094 3 18.0976 3.81144 18.0976 4.813V4.99442C18.0877 5.61535 17.2154 6.89635 17.2154 6.89635L10.5618 13.6266L10.4496 13.7646L8.4259 19.1763L10.4496 27.5674C10.4496 27.8219 10.6559 28.0278 10.91 28.0278H23.4366C24.2888 28.0278 25.0132 27.4065 25.1421 26.5638C25.6346 23.3426 26.7654 15.8677 26.7654 15.129Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M9.0042 29.0512H4.44502C3.64702 29.0512 3 28.4042 3 27.6058V13.9176C3 13.1192 3.64702 12.4726 4.44502 12.4726H9.0042C9.8022 12.4726 10.4492 13.1192 10.4492 13.9176V27.6058C10.4492 28.4042 9.8022 29.0512 9.0042 29.0512Z"
+                        fill="#DCD383"
+                      />
+                      <path
+                        d="M9.0042 26.3284H4.44502C3.64702 26.3284 3 25.6814 3 24.883V27.6059C3 28.4043 3.64702 29.0513 4.44502 29.0513H9.0042C9.8022 29.0513 10.4492 28.4043 10.4492 27.6059V24.883C10.4492 25.6814 9.8022 26.3284 9.0042 26.3284Z"
+                        fill="#C6C85C"
+                      />
+                      <path
+                        d="M24.2121 12.5752H23.7437C23.72 12.7997 23.684 13.0937 23.639 13.4423C22.7813 20.0742 17.1356 25.0401 10.4496 25.0401V27.5669C10.4496 27.8214 10.6559 28.0277 10.91 28.0277H23.4366C24.2888 28.0277 25.0133 27.406 25.1421 26.5638C25.6346 23.3425 26.7654 15.8676 26.7654 15.1285C26.7654 13.7182 25.6223 12.5752 24.2121 12.5752Z"
+                        fill="#E6E9EF"
+                      />
+                    </g>
+                    <defs>
+                      <filter
+                        id="filter0_d"
+                        x="0"
+                        y="0"
+                        width="31.7654"
+                        height="34.0513"
+                        filterUnits="userSpaceOnUse"
+                        color-interpolation-filters="sRGB"
+                      >
+                        <feFlood
+                          flood-opacity="0"
+                          result="BackgroundImageFix"
+                        />
+                        <feColorMatrix
+                          in="SourceAlpha"
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                          result="hardAlpha"
+                        />
+                        <feOffset dx="1" dy="1" />
+                        <feGaussianBlur stdDeviation="2" />
+                        <feComposite in2="hardAlpha" operator="out" />
+                        <feColorMatrix
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in2="BackgroundImageFix"
+                          result="effect1_dropShadow"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in="SourceGraphic"
+                          in2="effect1_dropShadow"
+                          result="shape"
+                        />
+                      </filter>
+                    </defs>
+                  </svg>
+                </div>
+                <% } else { %>
+                <div class="icon" style="background-color: #aaf09e">
+                  <svg
+                    width="32"
+                    height="34"
+                    viewBox="0 0 32 34"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g filter="url(#filter0_d)">
+                      <path
+                        d="M26.7654 15.129C26.7654 13.7183 25.6223 12.5753 24.2121 12.5753H20.5928C21.6382 9.95951 21.7145 7.8149 21.7078 7.12796C21.707 7.05247 21.724 6.78489 21.724 6.7256V6.60663C21.6481 4.1225 20.8877 3.36205 19.911 3C18.9094 3 18.0976 3.81144 18.0976 4.813V4.99442C18.0877 5.61535 17.2154 6.89635 17.2154 6.89635L10.5618 13.6266L10.4496 13.7646L8.4259 19.1763L10.4496 27.5674C10.4496 27.8219 10.6559 28.0278 10.91 28.0278H23.4366C24.2888 28.0278 25.0132 27.4065 25.1421 26.5638C25.6346 23.3426 26.7654 15.8677 26.7654 15.129Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M9.0042 29.0512H4.44502C3.64702 29.0512 3 28.4042 3 27.6058V13.9176C3 13.1192 3.64702 12.4726 4.44502 12.4726H9.0042C9.8022 12.4726 10.4492 13.1192 10.4492 13.9176V27.6058C10.4492 28.4042 9.8022 29.0512 9.0042 29.0512Z"
+                        fill="#DCD383"
+                      />
+                      <path
+                        d="M9.0042 26.3284H4.44502C3.64702 26.3284 3 25.6814 3 24.883V27.6059C3 28.4043 3.64702 29.0513 4.44502 29.0513H9.0042C9.8022 29.0513 10.4492 28.4043 10.4492 27.6059V24.883C10.4492 25.6814 9.8022 26.3284 9.0042 26.3284Z"
+                        fill="#C6C85C"
+                      />
+                      <path
+                        d="M24.2121 12.5752H23.7437C23.72 12.7997 23.684 13.0937 23.639 13.4423C22.7813 20.0742 17.1356 25.0401 10.4496 25.0401V27.5669C10.4496 27.8214 10.6559 28.0277 10.91 28.0277H23.4366C24.2888 28.0277 25.0133 27.406 25.1421 26.5638C25.6346 23.3425 26.7654 15.8676 26.7654 15.1285C26.7654 13.7182 25.6223 12.5752 24.2121 12.5752Z"
+                        fill="#E6E9EF"
+                      />
+                    </g>
+                    <defs>
+                      <filter
+                        id="filter0_d"
+                        x="0"
+                        y="0"
+                        width="31.7654"
+                        height="34.0513"
+                        filterUnits="userSpaceOnUse"
+                        color-interpolation-filters="sRGB"
+                      >
+                        <feFlood
+                          flood-opacity="0"
+                          result="BackgroundImageFix"
+                        />
+                        <feColorMatrix
+                          in="SourceAlpha"
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                          result="hardAlpha"
+                        />
+                        <feOffset dx="1" dy="1" />
+                        <feGaussianBlur stdDeviation="2" />
+                        <feComposite in2="hardAlpha" operator="out" />
+                        <feColorMatrix
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in2="BackgroundImageFix"
+                          result="effect1_dropShadow"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in="SourceGraphic"
+                          in2="effect1_dropShadow"
+                          result="shape"
+                        />
+                      </filter>
+                    </defs>
+                  </svg>
+                </div>
+                <% } %>
+              </div>
+              <div class="textLine">
+                <p></p>
+                <% if(experiental_behavior === "experientalNeutral"){ %>
+                <div class="icon" style="background-color: #56e13f">
+                  <svg
+                    width="32"
+                    height="35"
+                    viewBox="0 0 32 35"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g filter="url(#filter0_d)">
+                      <path
+                        d="M25.9344 6.9532C25.9344 6.9532 25.9061 6.94074 24.8837 6.5515C23.8615 6.16231 22.717 6.67574 22.3279 7.69807L18.4532 17.8777L23.1766 21.9395L26.2359 7.54175C26.2847 7.31245 26.149 7.04761 25.9344 6.9532Z"
+                        fill="#CFCFCF"
+                      />
+                      <path
+                        d="M21.5781 3.42472C21.558 3.1911 21.3497 3.00005 21.1152 3.00005C21.1152 3.00005 20.6546 3 19.5606 3C18.4667 3 17.5798 3.88685 17.5798 4.98078L18.1458 22.6943L23.177 21.9398L21.5781 3.42472Z"
+                        fill="#E0E0E0"
+                      />
+                      <path
+                        d="M14.9447 4.08485C14.8417 3.87425 14.5852 3.78618 14.3746 3.88917C14.3746 3.88917 13.9608 4.09151 12.9779 4.57191C11.9954 5.05247 11.588 6.23873 12.0686 7.22137L16.1657 15.422L21.5515 17.5977L14.9447 4.08485Z"
+                        fill="#F3F3F3"
+                      />
+                      <path
+                        d="M13.7213 4.20871C13.5232 4.30551 13.2771 4.42587 12.9779 4.57206C11.9954 5.05261 11.588 6.23888 12.0686 7.22152L13.7213 10.5295V4.20871Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M25.8198 29.869C25.8198 29.869 23.2393 21.0533 22.4913 18.4112C21.3097 14.2387 18.0574 11.0557 13.7207 11.0557C9.93737 11.0557 6.76969 13.741 6.0228 17.3057C5.84923 17.26 5.66787 17.2349 5.4765 17.2349C3.84064 17.2349 3.07686 18.6565 3.07686 18.6565C2.96588 18.863 2.97633 19.1948 3.10014 19.3939C3.10014 19.3939 4.57735 21.7701 7.15067 25.4501C8.54877 27.4494 11.2757 28.5802 13.7834 28.5802C15.2435 28.5802 15.435 29.8566 15.435 29.8566C15.4697 30.0884 15.6899 30.2781 15.9244 30.2781H25.5133C25.7479 30.278 25.8857 30.094 25.8198 29.869ZM13.7509 22.8233C11.5762 22.8109 10.262 21.6315 9.19736 20.3592C9.57893 19.9981 9.81734 19.4873 9.81734 18.9206C9.81734 16.7683 11.5684 15.0171 13.7207 15.0171C15.8731 15.0171 17.6242 16.7682 17.6242 18.9206C17.6242 21.0629 15.8894 22.807 13.7509 22.8233Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M25.8204 29.869C25.8204 29.869 23.2398 21.0533 22.4918 18.4112C21.3103 14.2387 18.0579 11.0557 13.7212 11.0557V15.0172C15.8736 15.0172 17.6247 16.7683 17.6247 18.9206C17.6247 21.0629 15.8899 22.807 13.7514 22.8234C13.7412 22.8233 13.7314 22.8228 13.7212 22.8227V28.5793C13.7422 28.5795 13.7631 28.5802 13.784 28.5802C15.2441 28.5802 15.4355 29.8566 15.4355 29.8566C15.4703 30.0884 15.6905 30.2781 15.9249 30.2781H25.5139C25.7484 30.278 25.8862 30.094 25.8204 29.869Z"
+                        fill="#F3F3F3"
+                      />
+                    </g>
+                    <defs>
+                      <filter
+                        id="filter0_d"
+                        x="0"
+                        y="0"
+                        width="31.2458"
+                        height="35.2781"
+                        filterUnits="userSpaceOnUse"
+                        color-interpolation-filters="sRGB"
+                      >
+                        <feFlood
+                          flood-opacity="0"
+                          result="BackgroundImageFix"
+                        />
+                        <feColorMatrix
+                          in="SourceAlpha"
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                          result="hardAlpha"
+                        />
+                        <feOffset dx="1" dy="1" />
+                        <feGaussianBlur stdDeviation="2" />
+                        <feComposite in2="hardAlpha" operator="out" />
+                        <feColorMatrix
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in2="BackgroundImageFix"
+                          result="effect1_dropShadow"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in="SourceGraphic"
+                          in2="effect1_dropShadow"
+                          result="shape"
+                        />
+                      </filter>
+                    </defs>
+                  </svg>
+                </div>
+                <% } else { %>
+                <div class="icon" style="background-color: #aaf09e">
+                  <svg
+                    width="32"
+                    height="35"
+                    viewBox="0 0 32 35"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g filter="url(#filter0_d)">
+                      <path
+                        d="M25.9344 6.9532C25.9344 6.9532 25.9061 6.94074 24.8837 6.5515C23.8615 6.16231 22.717 6.67574 22.3279 7.69807L18.4532 17.8777L23.1766 21.9395L26.2359 7.54175C26.2847 7.31245 26.149 7.04761 25.9344 6.9532Z"
+                        fill="#CFCFCF"
+                      />
+                      <path
+                        d="M21.5781 3.42472C21.558 3.1911 21.3497 3.00005 21.1152 3.00005C21.1152 3.00005 20.6546 3 19.5606 3C18.4667 3 17.5798 3.88685 17.5798 4.98078L18.1458 22.6943L23.177 21.9398L21.5781 3.42472Z"
+                        fill="#E0E0E0"
+                      />
+                      <path
+                        d="M14.9447 4.08485C14.8417 3.87425 14.5852 3.78618 14.3746 3.88917C14.3746 3.88917 13.9608 4.09151 12.9779 4.57191C11.9954 5.05247 11.588 6.23873 12.0686 7.22137L16.1657 15.422L21.5515 17.5977L14.9447 4.08485Z"
+                        fill="#F3F3F3"
+                      />
+                      <path
+                        d="M13.7213 4.20871C13.5232 4.30551 13.2771 4.42587 12.9779 4.57206C11.9954 5.05261 11.588 6.23888 12.0686 7.22152L13.7213 10.5295V4.20871Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M25.8198 29.869C25.8198 29.869 23.2393 21.0533 22.4913 18.4112C21.3097 14.2387 18.0574 11.0557 13.7207 11.0557C9.93737 11.0557 6.76969 13.741 6.0228 17.3057C5.84923 17.26 5.66787 17.2349 5.4765 17.2349C3.84064 17.2349 3.07686 18.6565 3.07686 18.6565C2.96588 18.863 2.97633 19.1948 3.10014 19.3939C3.10014 19.3939 4.57735 21.7701 7.15067 25.4501C8.54877 27.4494 11.2757 28.5802 13.7834 28.5802C15.2435 28.5802 15.435 29.8566 15.435 29.8566C15.4697 30.0884 15.6899 30.2781 15.9244 30.2781H25.5133C25.7479 30.278 25.8857 30.094 25.8198 29.869ZM13.7509 22.8233C11.5762 22.8109 10.262 21.6315 9.19736 20.3592C9.57893 19.9981 9.81734 19.4873 9.81734 18.9206C9.81734 16.7683 11.5684 15.0171 13.7207 15.0171C15.8731 15.0171 17.6242 16.7682 17.6242 18.9206C17.6242 21.0629 15.8894 22.807 13.7509 22.8233Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M25.8204 29.869C25.8204 29.869 23.2398 21.0533 22.4918 18.4112C21.3103 14.2387 18.0579 11.0557 13.7212 11.0557V15.0172C15.8736 15.0172 17.6247 16.7683 17.6247 18.9206C17.6247 21.0629 15.8899 22.807 13.7514 22.8234C13.7412 22.8233 13.7314 22.8228 13.7212 22.8227V28.5793C13.7422 28.5795 13.7631 28.5802 13.784 28.5802C15.2441 28.5802 15.4355 29.8566 15.4355 29.8566C15.4703 30.0884 15.6905 30.2781 15.9249 30.2781H25.5139C25.7484 30.278 25.8862 30.094 25.8204 29.869Z"
+                        fill="#F3F3F3"
+                      />
+                    </g>
+                    <defs>
+                      <filter
+                        id="filter0_d"
+                        x="0"
+                        y="0"
+                        width="31.2458"
+                        height="35.2781"
+                        filterUnits="userSpaceOnUse"
+                        color-interpolation-filters="sRGB"
+                      >
+                        <feFlood
+                          flood-opacity="0"
+                          result="BackgroundImageFix"
+                        />
+                        <feColorMatrix
+                          in="SourceAlpha"
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                          result="hardAlpha"
+                        />
+                        <feOffset dx="1" dy="1" />
+                        <feGaussianBlur stdDeviation="2" />
+                        <feComposite in2="hardAlpha" operator="out" />
+                        <feColorMatrix
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in2="BackgroundImageFix"
+                          result="effect1_dropShadow"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in="SourceGraphic"
+                          in2="effect1_dropShadow"
+                          result="shape"
+                        />
+                      </filter>
+                    </defs>
+                  </svg>
+                </div>
+                <% } %>
+              </div>
+              <div class="textLine">
+                <p></p>
+                <% if(experiental_behavior === "experientalBad"){ %>
+                <div class="icon" style="background-color: #56e13f">
+                  <svg
+                    width="32"
+                    height="34"
+                    viewBox="0 0 32 34"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g filter="url(#filter0_d)">
+                      <path
+                        d="M26.2544 17.1319C26.2544 18.5122 25.136 19.6306 23.756 19.6306H20.2146C21.2375 22.1901 21.3122 24.2886 21.3056 24.9608C21.3048 25.0347 21.3215 25.2965 21.3215 25.3545V25.4709C21.2472 27.9016 20.5031 28.6457 19.5475 29C18.5674 29 17.7731 28.206 17.7731 27.226V27.0485C17.7634 26.4409 16.9098 25.1874 16.9098 25.1874L10.3993 18.6019L10.2895 18.4669L8.30933 13.1716L10.2895 4.96089C10.2895 4.71183 10.4914 4.51033 10.74 4.51033H22.9972C23.8311 4.51033 24.54 5.1183 24.6661 5.94285C25.148 9.09484 26.2544 16.409 26.2544 17.1319Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M8.87509 3.50896H4.41395C3.63311 3.50896 3 4.14206 3 4.92329V18.3172C3 19.0984 3.63311 19.7311 4.41395 19.7311H8.87509C9.65594 19.7311 10.289 19.0984 10.289 18.3172V4.92329C10.289 4.14206 9.65594 3.50896 8.87509 3.50896Z"
+                        fill="#DCD383"
+                      />
+                      <path
+                        d="M8.87509 6.17322H4.41395C3.63311 6.17322 3 6.80632 3 7.58755V4.92325C3 4.14202 3.63311 3.50891 4.41395 3.50891H8.87509C9.65594 3.50891 10.289 4.14202 10.289 4.92325V7.58755C10.289 6.80632 9.65594 6.17322 8.87509 6.17322Z"
+                        fill="#C6C85C"
+                      />
+                      <path
+                        d="M23.756 19.6307H23.2977C23.2745 19.4111 23.2393 19.1233 23.1952 18.7822C22.356 12.293 16.8317 7.43386 10.2894 7.43386V4.96138C10.2894 4.71231 10.4913 4.51043 10.74 4.51043H22.9972C23.831 4.51043 24.5399 5.11878 24.666 5.94295C25.1479 9.09494 26.2544 16.4091 26.2544 17.1323C26.2544 18.5123 25.1359 19.6307 23.756 19.6307Z"
+                        fill="#E6E9EF"
+                      />
+                    </g>
+                    <defs>
+                      <filter
+                        id="filter0_d"
+                        x="0"
+                        y="0.508911"
+                        width="31.2544"
+                        height="33.4911"
+                        filterUnits="userSpaceOnUse"
+                        color-interpolation-filters="sRGB"
+                      >
+                        <feFlood
+                          flood-opacity="0"
+                          result="BackgroundImageFix"
+                        />
+                        <feColorMatrix
+                          in="SourceAlpha"
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                          result="hardAlpha"
+                        />
+                        <feOffset dx="1" dy="1" />
+                        <feGaussianBlur stdDeviation="2" />
+                        <feComposite in2="hardAlpha" operator="out" />
+                        <feColorMatrix
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in2="BackgroundImageFix"
+                          result="effect1_dropShadow"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in="SourceGraphic"
+                          in2="effect1_dropShadow"
+                          result="shape"
+                        />
+                      </filter>
+                    </defs>
+                  </svg>
+                </div>
+                <% } else { %>
+                <div class="icon" style="background-color: #aaf09e">
+                  <svg
+                    width="32"
+                    height="34"
+                    viewBox="0 0 32 34"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g filter="url(#filter0_d)">
+                      <path
+                        d="M26.2544 17.1319C26.2544 18.5122 25.136 19.6306 23.756 19.6306H20.2146C21.2375 22.1901 21.3122 24.2886 21.3056 24.9608C21.3048 25.0347 21.3215 25.2965 21.3215 25.3545V25.4709C21.2472 27.9016 20.5031 28.6457 19.5475 29C18.5674 29 17.7731 28.206 17.7731 27.226V27.0485C17.7634 26.4409 16.9098 25.1874 16.9098 25.1874L10.3993 18.6019L10.2895 18.4669L8.30933 13.1716L10.2895 4.96089C10.2895 4.71183 10.4914 4.51033 10.74 4.51033H22.9972C23.8311 4.51033 24.54 5.1183 24.6661 5.94285C25.148 9.09484 26.2544 16.409 26.2544 17.1319Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M8.87509 3.50896H4.41395C3.63311 3.50896 3 4.14206 3 4.92329V18.3172C3 19.0984 3.63311 19.7311 4.41395 19.7311H8.87509C9.65594 19.7311 10.289 19.0984 10.289 18.3172V4.92329C10.289 4.14206 9.65594 3.50896 8.87509 3.50896Z"
+                        fill="#DCD383"
+                      />
+                      <path
+                        d="M8.87509 6.17322H4.41395C3.63311 6.17322 3 6.80632 3 7.58755V4.92325C3 4.14202 3.63311 3.50891 4.41395 3.50891H8.87509C9.65594 3.50891 10.289 4.14202 10.289 4.92325V7.58755C10.289 6.80632 9.65594 6.17322 8.87509 6.17322Z"
+                        fill="#C6C85C"
+                      />
+                      <path
+                        d="M23.756 19.6307H23.2977C23.2745 19.4111 23.2393 19.1233 23.1952 18.7822C22.356 12.293 16.8317 7.43386 10.2894 7.43386V4.96138C10.2894 4.71231 10.4913 4.51043 10.74 4.51043H22.9972C23.831 4.51043 24.5399 5.11878 24.666 5.94295C25.1479 9.09494 26.2544 16.4091 26.2544 17.1323C26.2544 18.5123 25.1359 19.6307 23.756 19.6307Z"
+                        fill="#E6E9EF"
+                      />
+                    </g>
+                    <defs>
+                      <filter
+                        id="filter0_d"
+                        x="0"
+                        y="0.508911"
+                        width="31.2544"
+                        height="33.4911"
+                        filterUnits="userSpaceOnUse"
+                        color-interpolation-filters="sRGB"
+                      >
+                        <feFlood
+                          flood-opacity="0"
+                          result="BackgroundImageFix"
+                        />
+                        <feColorMatrix
+                          in="SourceAlpha"
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                          result="hardAlpha"
+                        />
+                        <feOffset dx="1" dy="1" />
+                        <feGaussianBlur stdDeviation="2" />
+                        <feComposite in2="hardAlpha" operator="out" />
+                        <feColorMatrix
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in2="BackgroundImageFix"
+                          result="effect1_dropShadow"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in="SourceGraphic"
+                          in2="effect1_dropShadow"
+                          result="shape"
+                        />
+                      </filter>
+                    </defs>
+                  </svg>
+                </div>
+                <% } %>
+              </div>
+            </div>
+          </section>
+          <section>
+            <div class="box w70">
+              <div class="box-header" style="background-color: #85b6ff">
+                Notes
+              </div>
+              <div class="textLine">
+                <p><%= notes %></p>
+              </div>
+              <div class="textLine">
+                <p></p>
+              </div>
+              <div class="textLine">
+                <p></p>
+              </div>
+            </div>
+            <div class="box w30">
+              <div class="box-header" style="background-color: #cfdef4">
+                Academic learning
+              </div>
+              <div class="textLine">
+                <% if(academic_present === "true"){ %>
+                <div class="icon" style="background-color: #cfdef4">Yes</div>
+                <% } else { %>
+                <div class="icon" style="border: 2px solid #cfdef4">Yes</div>
+                <% } %>
+
+                <p><%= academic_description %></p>
+              </div>
+              <div class="textLine">
+                <% if(academic_present === "false"){ %>
+                <div class="icon" style="background-color: #cfdef4">No</div>
+                <% } else { %>
+                <div class="icon" style="border: 2px solid #cfdef4">No</div>
+                <% } %>
+
+                <p></p>
+              </div>
+              <div class="textLine">
+                <p></p>
+              </div>
+            </div>
+          </section>
+          <section>
+            <div class="box w70">
+              <div class="box-header" style="background-color: #ffa078">
+                Session personal / FSS Challenge
+              </div>
+              <div class="textLine">
+                <p><%= session %></p>
+              </div>
+              <div class="textLine">
+                <p></p>
+              </div>
+              <div class="textLine">
+                <p></p>
+              </div>
+            </div>
+            <div class="box w30">
+              <div class="box-header" style="background-color: #a98cdd">
+                Social / executive skills
+              </div>
+              <div class="textLine">
+                <p><%= social %></p>
+                <% if(social_behavior === "experientalPositive"){ %>
+                <div class="icon" style="background-color: #7040c7">
+                  <svg
+                    width="32"
+                    height="34"
+                    viewBox="0 0 32 34"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g filter="url(#filter0_d)">
+                      <path
+                        d="M26.7654 15.129C26.7654 13.7183 25.6223 12.5753 24.2121 12.5753H20.5928C21.6382 9.95951 21.7145 7.8149 21.7078 7.12796C21.707 7.05247 21.724 6.78489 21.724 6.7256V6.60663C21.6481 4.1225 20.8877 3.36205 19.911 3C18.9094 3 18.0976 3.81144 18.0976 4.813V4.99442C18.0877 5.61535 17.2154 6.89635 17.2154 6.89635L10.5618 13.6266L10.4496 13.7646L8.4259 19.1763L10.4496 27.5674C10.4496 27.8219 10.6559 28.0278 10.91 28.0278H23.4366C24.2888 28.0278 25.0132 27.4065 25.1421 26.5638C25.6346 23.3426 26.7654 15.8677 26.7654 15.129Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M9.0042 29.0512H4.44502C3.64702 29.0512 3 28.4042 3 27.6058V13.9176C3 13.1192 3.64702 12.4726 4.44502 12.4726H9.0042C9.8022 12.4726 10.4492 13.1192 10.4492 13.9176V27.6058C10.4492 28.4042 9.8022 29.0512 9.0042 29.0512Z"
+                        fill="#83A1DC"
+                      />
+                      <path
+                        d="M9.0042 26.3284H4.44502C3.64702 26.3284 3 25.6814 3 24.883V27.6059C3 28.4043 3.64702 29.0513 4.44502 29.0513H9.0042C9.8022 29.0513 10.4492 28.4043 10.4492 27.6059V24.883C10.4492 25.6814 9.8022 26.3284 9.0042 26.3284Z"
+                        fill="#5C94C8"
+                      />
+                      <path
+                        d="M24.2121 12.5752H23.7437C23.72 12.7997 23.684 13.0938 23.639 13.4424C22.7813 20.0742 17.1356 25.0401 10.4496 25.0401V27.5669C10.4496 27.8215 10.6559 28.0278 10.91 28.0278H23.4366C24.2888 28.0278 25.0133 27.4061 25.1421 26.5638C25.6346 23.3425 26.7654 15.8676 26.7654 15.1285C26.7654 13.7183 25.6223 12.5752 24.2121 12.5752Z"
+                        fill="#E6E9EF"
+                      />
+                    </g>
+                    <defs>
+                      <filter
+                        id="filter0_d"
+                        x="0"
+                        y="0"
+                        width="31.7654"
+                        height="34.0513"
+                        filterUnits="userSpaceOnUse"
+                        color-interpolation-filters="sRGB"
+                      >
+                        <feFlood
+                          flood-opacity="0"
+                          result="BackgroundImageFix"
+                        />
+                        <feColorMatrix
+                          in="SourceAlpha"
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                          result="hardAlpha"
+                        />
+                        <feOffset dx="1" dy="1" />
+                        <feGaussianBlur stdDeviation="2" />
+                        <feComposite in2="hardAlpha" operator="out" />
+                        <feColorMatrix
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in2="BackgroundImageFix"
+                          result="effect1_dropShadow"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in="SourceGraphic"
+                          in2="effect1_dropShadow"
+                          result="shape"
+                        />
+                      </filter>
+                    </defs>
+                  </svg>
+                </div>
+                <% } else { %>
+                <div class="icon" style="background-color: #a98cdd">
+                  <svg
+                    width="32"
+                    height="34"
+                    viewBox="0 0 32 34"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g filter="url(#filter0_d)">
+                      <path
+                        d="M26.7654 15.129C26.7654 13.7183 25.6223 12.5753 24.2121 12.5753H20.5928C21.6382 9.95951 21.7145 7.8149 21.7078 7.12796C21.707 7.05247 21.724 6.78489 21.724 6.7256V6.60663C21.6481 4.1225 20.8877 3.36205 19.911 3C18.9094 3 18.0976 3.81144 18.0976 4.813V4.99442C18.0877 5.61535 17.2154 6.89635 17.2154 6.89635L10.5618 13.6266L10.4496 13.7646L8.4259 19.1763L10.4496 27.5674C10.4496 27.8219 10.6559 28.0278 10.91 28.0278H23.4366C24.2888 28.0278 25.0132 27.4065 25.1421 26.5638C25.6346 23.3426 26.7654 15.8677 26.7654 15.129Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M9.0042 29.0512H4.44502C3.64702 29.0512 3 28.4042 3 27.6058V13.9176C3 13.1192 3.64702 12.4726 4.44502 12.4726H9.0042C9.8022 12.4726 10.4492 13.1192 10.4492 13.9176V27.6058C10.4492 28.4042 9.8022 29.0512 9.0042 29.0512Z"
+                        fill="#83A1DC"
+                      />
+                      <path
+                        d="M9.0042 26.3284H4.44502C3.64702 26.3284 3 25.6814 3 24.883V27.6059C3 28.4043 3.64702 29.0513 4.44502 29.0513H9.0042C9.8022 29.0513 10.4492 28.4043 10.4492 27.6059V24.883C10.4492 25.6814 9.8022 26.3284 9.0042 26.3284Z"
+                        fill="#5C94C8"
+                      />
+                      <path
+                        d="M24.2121 12.5752H23.7437C23.72 12.7997 23.684 13.0938 23.639 13.4424C22.7813 20.0742 17.1356 25.0401 10.4496 25.0401V27.5669C10.4496 27.8215 10.6559 28.0278 10.91 28.0278H23.4366C24.2888 28.0278 25.0133 27.4061 25.1421 26.5638C25.6346 23.3425 26.7654 15.8676 26.7654 15.1285C26.7654 13.7183 25.6223 12.5752 24.2121 12.5752Z"
+                        fill="#E6E9EF"
+                      />
+                    </g>
+                    <defs>
+                      <filter
+                        id="filter0_d"
+                        x="0"
+                        y="0"
+                        width="31.7654"
+                        height="34.0513"
+                        filterUnits="userSpaceOnUse"
+                        color-interpolation-filters="sRGB"
+                      >
+                        <feFlood
+                          flood-opacity="0"
+                          result="BackgroundImageFix"
+                        />
+                        <feColorMatrix
+                          in="SourceAlpha"
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                          result="hardAlpha"
+                        />
+                        <feOffset dx="1" dy="1" />
+                        <feGaussianBlur stdDeviation="2" />
+                        <feComposite in2="hardAlpha" operator="out" />
+                        <feColorMatrix
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in2="BackgroundImageFix"
+                          result="effect1_dropShadow"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in="SourceGraphic"
+                          in2="effect1_dropShadow"
+                          result="shape"
+                        />
+                      </filter>
+                    </defs>
+                  </svg>
+                </div>
+                <% } %>
+              </div>
+              <div class="textLine">
+                <p></p>
+                <% if(social_behavior === "experientalNeutral"){ %>
+                <div class="icon" style="background-color: #7040c7">
+                  <svg
+                    width="32"
+                    height="35"
+                    viewBox="0 0 32 35"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g filter="url(#filter0_d)">
+                      <path
+                        d="M25.9344 6.9532C25.9344 6.9532 25.9061 6.94074 24.8837 6.5515C23.8615 6.16231 22.717 6.67574 22.3279 7.69807L18.4532 17.8777L23.1766 21.9395L26.2359 7.54175C26.2847 7.31245 26.149 7.04761 25.9344 6.9532Z"
+                        fill="#CFCFCF"
+                      />
+                      <path
+                        d="M21.5781 3.42472C21.558 3.1911 21.3497 3.00005 21.1152 3.00005C21.1152 3.00005 20.6546 3 19.5606 3C18.4667 3 17.5798 3.88685 17.5798 4.98078L18.1458 22.6943L23.177 21.9398L21.5781 3.42472Z"
+                        fill="#E0E0E0"
+                      />
+                      <path
+                        d="M14.9447 4.08484C14.8417 3.87424 14.5852 3.78617 14.3746 3.88915C14.3746 3.88915 13.9608 4.0915 12.9779 4.5719C11.9954 5.05245 11.588 6.23871 12.0686 7.22135L16.1657 15.4219L21.5515 17.5977L14.9447 4.08484Z"
+                        fill="#F3F3F3"
+                      />
+                      <path
+                        d="M13.7213 4.20868C13.5232 4.30548 13.2771 4.42584 12.9779 4.57203C11.9954 5.05258 11.588 6.23885 12.0686 7.22148L13.7213 10.5295V4.20868Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M25.8198 29.8689C25.8198 29.8689 23.2393 21.0533 22.4913 18.4112C21.3097 14.2386 18.0574 11.0557 13.7207 11.0557C9.93737 11.0557 6.76969 13.741 6.0228 17.3057C5.84923 17.26 5.66787 17.2349 5.4765 17.2349C3.84064 17.2349 3.07686 18.6565 3.07686 18.6565C2.96588 18.863 2.97633 19.1948 3.10014 19.3939C3.10014 19.3939 4.57735 21.7701 7.15067 25.4501C8.54877 27.4494 11.2757 28.5802 13.7834 28.5802C15.2435 28.5802 15.435 29.8565 15.435 29.8565C15.4697 30.0884 15.6899 30.2781 15.9244 30.2781H25.5133C25.7479 30.278 25.8857 30.0939 25.8198 29.8689ZM13.7509 22.8233C11.5762 22.8109 10.262 21.6314 9.19736 20.3591C9.57893 19.9981 9.81734 19.4873 9.81734 18.9206C9.81734 16.7683 11.5684 15.0171 13.7207 15.0171C15.8731 15.0171 17.6242 16.7682 17.6242 18.9206C17.6242 21.0629 15.8894 22.807 13.7509 22.8233Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M25.8204 29.8689C25.8204 29.8689 23.2398 21.0533 22.4918 18.4112C21.3103 14.2386 18.0579 11.0557 13.7212 11.0557V15.0172C15.8736 15.0172 17.6247 16.7683 17.6247 18.9206C17.6247 21.0629 15.8899 22.807 13.7514 22.8234C13.7412 22.8233 13.7314 22.8228 13.7212 22.8227V28.5793C13.7422 28.5794 13.7631 28.5802 13.784 28.5802C15.2441 28.5802 15.4355 29.8565 15.4355 29.8565C15.4703 30.0884 15.6905 30.2781 15.9249 30.2781H25.5139C25.7484 30.278 25.8862 30.0939 25.8204 29.8689Z"
+                        fill="#F3F3F3"
+                      />
+                    </g>
+                    <defs>
+                      <filter
+                        id="filter0_d"
+                        x="0"
+                        y="0"
+                        width="31.2458"
+                        height="35.2781"
+                        filterUnits="userSpaceOnUse"
+                        color-interpolation-filters="sRGB"
+                      >
+                        <feFlood
+                          flood-opacity="0"
+                          result="BackgroundImageFix"
+                        />
+                        <feColorMatrix
+                          in="SourceAlpha"
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                          result="hardAlpha"
+                        />
+                        <feOffset dx="1" dy="1" />
+                        <feGaussianBlur stdDeviation="2" />
+                        <feComposite in2="hardAlpha" operator="out" />
+                        <feColorMatrix
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in2="BackgroundImageFix"
+                          result="effect1_dropShadow"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in="SourceGraphic"
+                          in2="effect1_dropShadow"
+                          result="shape"
+                        />
+                      </filter>
+                    </defs>
+                  </svg>
+                </div>
+                <% } else { %>
+                <div class="icon" style="background-color: #a98cdd">
+                  <svg
+                    width="32"
+                    height="35"
+                    viewBox="0 0 32 35"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g filter="url(#filter0_d)">
+                      <path
+                        d="M25.9344 6.9532C25.9344 6.9532 25.9061 6.94074 24.8837 6.5515C23.8615 6.16231 22.717 6.67574 22.3279 7.69807L18.4532 17.8777L23.1766 21.9395L26.2359 7.54175C26.2847 7.31245 26.149 7.04761 25.9344 6.9532Z"
+                        fill="#CFCFCF"
+                      />
+                      <path
+                        d="M21.5781 3.42472C21.558 3.1911 21.3497 3.00005 21.1152 3.00005C21.1152 3.00005 20.6546 3 19.5606 3C18.4667 3 17.5798 3.88685 17.5798 4.98078L18.1458 22.6943L23.177 21.9398L21.5781 3.42472Z"
+                        fill="#E0E0E0"
+                      />
+                      <path
+                        d="M14.9447 4.08484C14.8417 3.87424 14.5852 3.78617 14.3746 3.88915C14.3746 3.88915 13.9608 4.0915 12.9779 4.5719C11.9954 5.05245 11.588 6.23871 12.0686 7.22135L16.1657 15.4219L21.5515 17.5977L14.9447 4.08484Z"
+                        fill="#F3F3F3"
+                      />
+                      <path
+                        d="M13.7213 4.20868C13.5232 4.30548 13.2771 4.42584 12.9779 4.57203C11.9954 5.05258 11.588 6.23885 12.0686 7.22148L13.7213 10.5295V4.20868Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M25.8198 29.8689C25.8198 29.8689 23.2393 21.0533 22.4913 18.4112C21.3097 14.2386 18.0574 11.0557 13.7207 11.0557C9.93737 11.0557 6.76969 13.741 6.0228 17.3057C5.84923 17.26 5.66787 17.2349 5.4765 17.2349C3.84064 17.2349 3.07686 18.6565 3.07686 18.6565C2.96588 18.863 2.97633 19.1948 3.10014 19.3939C3.10014 19.3939 4.57735 21.7701 7.15067 25.4501C8.54877 27.4494 11.2757 28.5802 13.7834 28.5802C15.2435 28.5802 15.435 29.8565 15.435 29.8565C15.4697 30.0884 15.6899 30.2781 15.9244 30.2781H25.5133C25.7479 30.278 25.8857 30.0939 25.8198 29.8689ZM13.7509 22.8233C11.5762 22.8109 10.262 21.6314 9.19736 20.3591C9.57893 19.9981 9.81734 19.4873 9.81734 18.9206C9.81734 16.7683 11.5684 15.0171 13.7207 15.0171C15.8731 15.0171 17.6242 16.7682 17.6242 18.9206C17.6242 21.0629 15.8894 22.807 13.7509 22.8233Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M25.8204 29.8689C25.8204 29.8689 23.2398 21.0533 22.4918 18.4112C21.3103 14.2386 18.0579 11.0557 13.7212 11.0557V15.0172C15.8736 15.0172 17.6247 16.7683 17.6247 18.9206C17.6247 21.0629 15.8899 22.807 13.7514 22.8234C13.7412 22.8233 13.7314 22.8228 13.7212 22.8227V28.5793C13.7422 28.5794 13.7631 28.5802 13.784 28.5802C15.2441 28.5802 15.4355 29.8565 15.4355 29.8565C15.4703 30.0884 15.6905 30.2781 15.9249 30.2781H25.5139C25.7484 30.278 25.8862 30.0939 25.8204 29.8689Z"
+                        fill="#F3F3F3"
+                      />
+                    </g>
+                    <defs>
+                      <filter
+                        id="filter0_d"
+                        x="0"
+                        y="0"
+                        width="31.2458"
+                        height="35.2781"
+                        filterUnits="userSpaceOnUse"
+                        color-interpolation-filters="sRGB"
+                      >
+                        <feFlood
+                          flood-opacity="0"
+                          result="BackgroundImageFix"
+                        />
+                        <feColorMatrix
+                          in="SourceAlpha"
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                          result="hardAlpha"
+                        />
+                        <feOffset dx="1" dy="1" />
+                        <feGaussianBlur stdDeviation="2" />
+                        <feComposite in2="hardAlpha" operator="out" />
+                        <feColorMatrix
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in2="BackgroundImageFix"
+                          result="effect1_dropShadow"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in="SourceGraphic"
+                          in2="effect1_dropShadow"
+                          result="shape"
+                        />
+                      </filter>
+                    </defs>
+                  </svg>
+                </div>
+                <% } %>
+              </div>
+              <div class="textLine">
+                <p></p>
+                <% if(social_behavior === "experientalBad"){ %>
+                <div class="icon" style="background-color: #7040c7">
+                  <svg
+                    width="32"
+                    height="34"
+                    viewBox="0 0 32 34"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g filter="url(#filter0_d)">
+                      <path
+                        d="M26.2544 17.1319C26.2544 18.5122 25.136 19.6306 23.756 19.6306H20.2146C21.2375 22.1901 21.3122 24.2886 21.3056 24.9608C21.3048 25.0347 21.3215 25.2965 21.3215 25.3545V25.4709C21.2472 27.9016 20.5031 28.6457 19.5475 29C18.5674 29 17.7731 28.206 17.7731 27.226V27.0485C17.7634 26.4409 16.9098 25.1874 16.9098 25.1874L10.3993 18.6019L10.2895 18.4669L8.30933 13.1716L10.2895 4.96089C10.2895 4.71183 10.4914 4.51033 10.74 4.51033H22.9972C23.8311 4.51033 24.54 5.1183 24.6661 5.94285C25.148 9.09484 26.2544 16.409 26.2544 17.1319Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M8.87509 3.50893H4.41395C3.63311 3.50893 3 4.14203 3 4.92326V18.3171C3 19.0984 3.63311 19.7311 4.41395 19.7311H8.87509C9.65594 19.7311 10.289 19.0984 10.289 18.3171V4.92326C10.289 4.14203 9.65594 3.50893 8.87509 3.50893Z"
+                        fill="#83A1DC"
+                      />
+                      <path
+                        d="M8.87509 6.17325H4.41395C3.63311 6.17325 3 6.80635 3 7.58759V4.92328C3 4.14205 3.63311 3.50894 4.41395 3.50894H8.87509C9.65594 3.50894 10.289 4.14205 10.289 4.92328V7.58759C10.289 6.80635 9.65594 6.17325 8.87509 6.17325Z"
+                        fill="#5C94C8"
+                      />
+                      <path
+                        d="M23.756 19.6307H23.2977C23.2745 19.4111 23.2393 19.1233 23.1952 18.7822C22.356 12.293 16.8317 7.43386 10.2894 7.43386V4.96138C10.2894 4.71231 10.4913 4.51043 10.74 4.51043H22.9972C23.831 4.51043 24.5399 5.11878 24.666 5.94295C25.1479 9.09494 26.2544 16.4091 26.2544 17.1323C26.2544 18.5123 25.1359 19.6307 23.756 19.6307Z"
+                        fill="#E6E9EF"
+                      />
+                    </g>
+                    <defs>
+                      <filter
+                        id="filter0_d"
+                        x="0"
+                        y="0.508911"
+                        width="31.2544"
+                        height="33.4911"
+                        filterUnits="userSpaceOnUse"
+                        color-interpolation-filters="sRGB"
+                      >
+                        <feFlood
+                          flood-opacity="0"
+                          result="BackgroundImageFix"
+                        />
+                        <feColorMatrix
+                          in="SourceAlpha"
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                          result="hardAlpha"
+                        />
+                        <feOffset dx="1" dy="1" />
+                        <feGaussianBlur stdDeviation="2" />
+                        <feComposite in2="hardAlpha" operator="out" />
+                        <feColorMatrix
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in2="BackgroundImageFix"
+                          result="effect1_dropShadow"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in="SourceGraphic"
+                          in2="effect1_dropShadow"
+                          result="shape"
+                        />
+                      </filter>
+                    </defs>
+                  </svg>
+                </div>
+                <% } else { %>
+                <div class="icon" style="background-color: #a98cdd">
+                  <svg
+                    width="32"
+                    height="34"
+                    viewBox="0 0 32 34"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g filter="url(#filter0_d)">
+                      <path
+                        d="M26.2544 17.1319C26.2544 18.5122 25.136 19.6306 23.756 19.6306H20.2146C21.2375 22.1901 21.3122 24.2886 21.3056 24.9608C21.3048 25.0347 21.3215 25.2965 21.3215 25.3545V25.4709C21.2472 27.9016 20.5031 28.6457 19.5475 29C18.5674 29 17.7731 28.206 17.7731 27.226V27.0485C17.7634 26.4409 16.9098 25.1874 16.9098 25.1874L10.3993 18.6019L10.2895 18.4669L8.30933 13.1716L10.2895 4.96089C10.2895 4.71183 10.4914 4.51033 10.74 4.51033H22.9972C23.8311 4.51033 24.54 5.1183 24.6661 5.94285C25.148 9.09484 26.2544 16.409 26.2544 17.1319Z"
+                        fill="white"
+                      />
+                      <path
+                        d="M8.87509 3.50893H4.41395C3.63311 3.50893 3 4.14203 3 4.92326V18.3171C3 19.0984 3.63311 19.7311 4.41395 19.7311H8.87509C9.65594 19.7311 10.289 19.0984 10.289 18.3171V4.92326C10.289 4.14203 9.65594 3.50893 8.87509 3.50893Z"
+                        fill="#83A1DC"
+                      />
+                      <path
+                        d="M8.87509 6.17325H4.41395C3.63311 6.17325 3 6.80635 3 7.58759V4.92328C3 4.14205 3.63311 3.50894 4.41395 3.50894H8.87509C9.65594 3.50894 10.289 4.14205 10.289 4.92328V7.58759C10.289 6.80635 9.65594 6.17325 8.87509 6.17325Z"
+                        fill="#5C94C8"
+                      />
+                      <path
+                        d="M23.756 19.6307H23.2977C23.2745 19.4111 23.2393 19.1233 23.1952 18.7822C22.356 12.293 16.8317 7.43386 10.2894 7.43386V4.96138C10.2894 4.71231 10.4913 4.51043 10.74 4.51043H22.9972C23.831 4.51043 24.5399 5.11878 24.666 5.94295C25.1479 9.09494 26.2544 16.4091 26.2544 17.1323C26.2544 18.5123 25.1359 19.6307 23.756 19.6307Z"
+                        fill="#E6E9EF"
+                      />
+                    </g>
+                    <defs>
+                      <filter
+                        id="filter0_d"
+                        x="0"
+                        y="0.508911"
+                        width="31.2544"
+                        height="33.4911"
+                        filterUnits="userSpaceOnUse"
+                        color-interpolation-filters="sRGB"
+                      >
+                        <feFlood
+                          flood-opacity="0"
+                          result="BackgroundImageFix"
+                        />
+                        <feColorMatrix
+                          in="SourceAlpha"
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                          result="hardAlpha"
+                        />
+                        <feOffset dx="1" dy="1" />
+                        <feGaussianBlur stdDeviation="2" />
+                        <feComposite in2="hardAlpha" operator="out" />
+                        <feColorMatrix
+                          type="matrix"
+                          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in2="BackgroundImageFix"
+                          result="effect1_dropShadow"
+                        />
+                        <feBlend
+                          mode="normal"
+                          in="SourceGraphic"
+                          in2="effect1_dropShadow"
+                          result="shape"
+                        />
+                      </filter>
+                    </defs>
+                  </svg>
+                </div>
+                <% } %>
+              </div>
+            </div>
+          </section>
+          <section>
+            <div class="box w70" style="align-items: flex-end">
+              <img
+                class="star_1"
+                src="/daily_planner/star_big.svg"
+                alt="star_1"
+              />
+              <img
+                class="star_2"
+                src="/daily_planner/star_small.svg"
+                alt="star_2"
+              />
+              <div class="box-header" style="background-color: #ffd600">
+                Reward
+              </div>
+              <div class="textLine" style="width: calc(100% - 70px)">
+                <p><%= reward_description %></p>
+                <% if(reward_present === "true"){ %>
+                <div class="icon" style="background-color: #ffd600">Yes</div>
+                <% } else { %>
+                <div class="icon" style="border: 2px solid #ffd600">Yes</div>
+                <% } %>
+              </div>
+              <div class="textLine" style="width: calc(100% - 70px)">
+                <p></p>
+                <% if(reward_present === "false"){ %>
+                <div class="icon" style="background-color: #ffd600">No</div>
+                <% } else { %>
+                <div class="icon" style="border: 2px solid #ffd600">No</div>
+                <% } %>
+              </div>
+              <div class="textLine" style="width: calc(100% - 70px)">
+                <p></p>
+              </div>
+            </div>
+            <div class="box w30">
+              <div class="box-header" style="background-color: #fcdbf5">
+                Cleaning assignment
+              </div>
+              <div class="textLine">
+                <% if(cleaning_present === "true"){ %>
+                <div class="icon" style="background-color: #fcdbf5">Yes</div>
+                <% } else { %>
+                <div class="icon" style="border: 2px solid #fcdbf5">Yes</div>
+                <% } %>
+
+                <p><%= cleaning_description %></p>
+              </div>
+              <div class="textLine">
+                <% if(cleaning_present === "false"){ %>
+                <div class="icon" style="background-color: #fcdbf5">No</div>
+                <% } else { %>
+                <div class="icon" style="border: 2px solid #fcdbf5">No</div>
+                <% } %>
+
+                <p></p>
+              </div>
+              <div class="textLine">
+                <p></p>
+              </div>
+            </div>
+          </section>
+          <section>
+            <div class="box w30">
+              <div class="box-header" style="background-color: #fcdbf5">
+                I am feeling...
+              </div>
+              <div class="smiles">
+                <% for (const _fel of feeling) { %>
+                <div class="smile-container">
+                  <div class="smile <%= _fel.value %>"></div>
+                  <span><%= _fel.title %></span>
+                </div>
+                <% } %>
+              </div>
+            </div>
+            <div class="col w70">
+              <div class="box">
+                <div class="box-header" style="background-color: #f98989">
+                  behavior review & Perspective taking
+                </div>
+                <div class="sub-header">
+                  Are you <b>closer</b> or <b>further away</b> from your goals?
+                </div>
+                <div class="textLine">
+                  <div class="icon"></div>
+                  <p><%= behavior_review %></p>
+                </div>
+                <div class="textLine">
+                  <div class="icon"></div>
+                  <p></p>
+                </div>
+                <div class="textLine">
+                  <div class="icon"></div>
+                  <p></p>
+                </div>
+              </div>
+
+              <div class="title">Daily planner</div>
+            </div>
+          </section>
+        </div>
+      </page>
+    </main>
+  </body>
+</html>
